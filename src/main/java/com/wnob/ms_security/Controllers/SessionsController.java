@@ -29,10 +29,10 @@ public class SessionsController {
     /*
     @PostMapping
     public Session create(@RequestBody Session newSession){
-        newSession.setPassword(this.theEncryptionService.convertSHA256(newSession.getPassword()));
+        newSession.se(newSession.getPassword());
         return this.theSessionRepository.save(newSession);
     }
-     */
+*/
     @PutMapping("{id}")
     public Session update(@PathVariable String id, @RequestBody Session newSession){
         Session actualSession=this.theSessionRepository.findById(id).orElse(null);

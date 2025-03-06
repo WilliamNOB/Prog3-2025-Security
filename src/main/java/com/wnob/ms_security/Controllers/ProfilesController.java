@@ -26,13 +26,14 @@ public class ProfilesController {
         Profile theProfile=this.theProfileRepository.findById(id).orElse(null);
         return theProfile;
     }
-    /*
+
     @PostMapping
     public Profile create(@RequestBody Profile newProfile){
-        newProfile.setPassword(this.theEncryptionService.convertSHA256(newProfile.getPassword()));
+        newProfile.setPhone(newProfile.getPhone());
+        newProfile.setPhoto(newProfile.getPhoto());
         return this.theProfileRepository.save(newProfile);
     }
-     */
+
     @PutMapping("{id}")
     public Profile update(@PathVariable String id, @RequestBody Profile newProfile){
         Profile actualProfile=this.theProfileRepository.findById(id).orElse(null);

@@ -26,13 +26,14 @@ public class UsersController {
         User theUser=this.theUserRepository.findById(id).orElse(null);
         return theUser;
     }
-    /*
+
     @PostMapping
     public User create(@RequestBody User newUser){
-        newUser.setPassword(this.theEncryptionService.convertSHA256(newUser.getPassword()));
+        newUser.setEmail(newUser.getEmail());
+        newUser.setPassword(newUser.getPassword());
         return this.theUserRepository.save(newUser);
     }
-     */
+
     @PutMapping("{id}")
     public User update(@PathVariable String id, @RequestBody User newUser){
         User actualUser=this.theUserRepository.findById(id).orElse(null);

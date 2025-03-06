@@ -26,13 +26,14 @@ public class PermissionsController {
         Permission thePermission=this.thePermissionRepository.findById(id).orElse(null);
         return thePermission;
     }
-    /*
+
     @PostMapping
     public Permission create(@RequestBody Permission newPermission){
-        newPermission.setPassword(this.theEncryptionService.convertSHA256(newPermission.getPassword()));
+        newPermission.setUrl(newPermission.getUrl());
+        newPermission.setMethod(newPermission.getMethod());
         return this.thePermissionRepository.save(newPermission);
     }
-     */
+
     @PutMapping("{id}")
     public Permission update(@PathVariable String id, @RequestBody Permission newPermission){
         Permission actualPermission=this.thePermissionRepository.findById(id).orElse(null);

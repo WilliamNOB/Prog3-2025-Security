@@ -26,13 +26,14 @@ public class RolesController {
         Role theRole=this.theRoleRepository.findById(id).orElse(null);
         return theRole;
     }
-    /*
+
     @PostMapping
     public Role create(@RequestBody Role newRole){
-        newRole.setPassword(this.theEncryptionService.convertSHA256(newRole.getPassword()));
+        newRole.setName(newRole.getName());
+        newRole.setDescription(newRole.getDescription());
         return this.theRoleRepository.save(newRole);
     }
-     */
+
     @PutMapping("{id}")
     public Role update(@PathVariable String id, @RequestBody Role newRole){
         Role actualRole=this.theRoleRepository.findById(id).orElse(null);
