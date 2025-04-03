@@ -2,23 +2,28 @@ package com.wnob.ms_security.Models;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
 @Data
-@Document
+@Document()
 public class Session {
     @Id
     private String _id;
     private String token;
-    private Date expiration;
-    private String code2FA;
+    private int token2FA;
+    private Date started_At;
+    private Date end_At;
+    @DBRef
+    private User theUser;
 
-    public Session(String token, Date expiration, String code2FA) {
-        this.token = token;
-        this.expiration = expiration;
-        this.code2FA = code2FA;
+    public Session(){}
+
+    public Session(int token2FA, User theUser){
+        this.token2FA = token2FA;
+        this.theUser = theUser;
     }
 
     public String get_id() {
@@ -33,19 +38,36 @@ public class Session {
         this.token = token;
     }
 
-    public Date getExpiration() {
-        return expiration;
+    public int getToken2FA() {
+        return token2FA;
     }
 
-    public void setExpiration(Date expiration) {
-        this.expiration = expiration;
+    public void setToken2FA(int token2FA) {
+        this.token2FA = token2FA;
     }
 
-    public String getCode2FA() {
-        return code2FA;
+    public Date getStarted_At() {
+        return started_At;
     }
 
-    public void setCode2FA(String code2FA) {
-        this.code2FA = code2FA;
+    public void setStarted_At(Date started_At) {
+        this.started_At = started_At;
     }
+
+    public Date getEnd_At() {
+        return end_At;
+    }
+
+    public void setEnd_At(Date end_At) {
+        this.end_At = end_At;
+    }
+
+    public User getTheUser() {
+        return theUser;
+    }
+
+    public void setTheUser(User theUser) {
+        this.theUser = theUser;
+    }
+
 }

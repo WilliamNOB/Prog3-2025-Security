@@ -2,6 +2,7 @@ package com.wnob.ms_security.Controllers;
 
 import com.wnob.ms_security.Models.User;
 import com.wnob.ms_security.Repositories.UserRepository;
+import com.wnob.ms_security.Services.EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,14 +10,13 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UsersController {
     @Autowired
     private UserRepository theUserRepository;
-/*
     @Autowired
     private EncryptionService theEncryptionService;
-*/
+
     @GetMapping("")
     public List<User> find(){
         return this.theUserRepository.findAll();
@@ -29,9 +29,13 @@ public class UsersController {
 
     @PostMapping
     public User create(@RequestBody User newUser){
-        newUser.setEmail(newUser.getEmail());
-        newUser.setPassword(newUser.getPassword());
-        return this.theUserRepository.save(newUser);
+        if(this.theUserRepository.getUserByEmail(newUser.getEmail())==null){
+            newUser.setPassword(theEncryptionService.convertSHA256(newUser.getPassword()));
+            return this.theUserRepository.save(newUser);
+
+        }else {
+            return null;
+        }
     }
 
     @PutMapping("{id}")
@@ -54,6 +58,4 @@ public class UsersController {
             this.theUserRepository.delete(theUser);
         }
     }
-
-
 }

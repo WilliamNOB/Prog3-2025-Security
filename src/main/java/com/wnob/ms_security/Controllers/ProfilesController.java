@@ -1,7 +1,9 @@
 package com.wnob.ms_security.Controllers;
 
 import com.wnob.ms_security.Models.Profile;
+import com.wnob.ms_security.Models.User;
 import com.wnob.ms_security.Repositories.ProfileRepository;
+import com.wnob.ms_security.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,9 @@ import java.util.List;
 public class ProfilesController {
     @Autowired
     private ProfileRepository theProfileRepository;
+    
+    @Autowired
+    private UserRepository theUserRepository;
     /*
         @Autowired
         private EncryptionService theEncryptionService;
@@ -51,6 +56,30 @@ public class ProfilesController {
         Profile theProfile=this.theProfileRepository.findById(id).orElse(null);
         if (theProfile!=null){
             this.theProfileRepository.delete(theProfile);
+        }
+    }
+
+    @PutMapping("{profile_id}/user/{user_id}")
+    public Profile matchProfileUser(@PathVariable String profile_id,
+                                    @PathVariable String user_id) {
+        Profile theActualProfile = this.theProfileRepository.findById(profile_id).orElse(null);
+        User theActualUser = this.theUserRepository.findById(user_id).orElse(null);
+        if(theActualProfile!=null && theActualUser!=null){
+            theActualProfile.setUser(theActualUser);
+            return this.theProfileRepository.save(theActualProfile);
+        }else{
+            return null;
+        }
+    }
+
+    @PutMapping("{profile_id}/user")
+    public Profile unMatchProfileUser(@PathVariable String profile_id) {
+        Profile theActualProfile = this.theProfileRepository.findById(profile_id).orElse(null);
+        if(theActualProfile!=null){
+            theActualProfile.setUser(null);
+            return this.theProfileRepository.save(theActualProfile);
+        }else{
+            return null;
         }
     }
 }

@@ -2,6 +2,7 @@ package com.wnob.ms_security.Models;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -13,14 +14,23 @@ public class User {
     private String email;
     private String password;
 
+    public User() {
+    }
+
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
+
+
     public String get_id() {
         return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getName() {
@@ -46,4 +56,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }
